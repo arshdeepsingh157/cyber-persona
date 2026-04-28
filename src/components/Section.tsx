@@ -1,5 +1,6 @@
 import { useRef, type ReactNode } from "react";
-import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useParallaxEnabled } from "@/hooks/use-parallax-enabled";
 
 export function Section({
   id,
@@ -15,16 +16,15 @@ export function Section({
   children: ReactNode;
 }) {
   const ref = useRef<HTMLElement>(null);
-  const reduce = useReducedMotion();
+  const enabled = useParallaxEnabled();
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"],
   });
 
-  // Header drifts up faster; content drifts up slightly → parallax depth
-  const headerY = useTransform(scrollYProgress, [0, 1], [80, -80]);
-  const contentY = useTransform(scrollYProgress, [0, 1], [40, -40]);
-  const opacity = useTransform(scrollYProgress, [0, 0.15, 0.85, 1], [0.3, 1, 1, 0.4]);
+  // Transform-only parallax, small offsets → no opacity repaint, GPU-friendly.
+  const headerY = useTransform(scrollYProgress, [0, 1], [40, -40]);
+  const contentY = useTransform(scrollYProgress, [0, 1], [20, -20]);
 
   return (
     <section
@@ -33,8 +33,8 @@ export function Section({
       className="relative mx-auto max-w-7xl px-6 py-24 md:py-32"
     >
       <motion.div
-        style={reduce ? undefined : { y: headerY, opacity }}
-        className="mb-12 will-change-transform md:mb-16"
+        style={enabled ? { y: headerY, translateZ: 0 } : undefined}
+        className="mb-12 md:mb-16 will-change-transform [backface-visibility:hidden]"
       >
         <div className="mb-3 flex items-center gap-3 font-mono text-xs uppercase tracking-[0.3em] text-neon">
           <span className="h-px w-8 bg-neon" />
@@ -48,8 +48,8 @@ export function Section({
         )}
       </motion.div>
       <motion.div
-        style={reduce ? undefined : { y: contentY }}
-        className="will-change-transform"
+        style={enabled ? { y: contentY, translateZ: 0 } : undefined}
+        className="will-change-transform [backface-visibility:hidden]"
       >
         {children}
       </motion.div>
