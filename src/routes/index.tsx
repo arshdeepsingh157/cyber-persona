@@ -15,13 +15,19 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
-  // Default: show boot. On mount, skip if already seen this session.
-  const [booted, setBooted] = useState(() => {
-    if (typeof window === "undefined") return false;
-    return sessionStorage.getItem("arsh_booted") === "1";
-  });
+  // Boot animation plays on EVERY refresh/entry.
+  const [booted, setBooted] = useState(false);
 
   useEffect(() => {
+    // Always land on hero on load/refresh — disable browser scroll restoration and jump to top.
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
+    window.scrollTo(0, 0);
+    if (window.location.hash) {
+      window.history.replaceState(null, "", window.location.pathname);
+    }
+
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") finish();
     };
@@ -31,10 +37,9 @@ function Index() {
   }, []);
 
   const finish = () => {
-    try {
-      sessionStorage.setItem("arsh_booted", "1");
-    } catch {}
     setBooted(true);
+    // Ensure we're at the hero after the boot sequence completes.
+    requestAnimationFrame(() => window.scrollTo({ top: 0, behavior: "smooth" }));
   };
 
   return (
