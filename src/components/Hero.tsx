@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
-import portrait from "@/assets/arshdeep.jpeg";
+import portrait from "@/assets/arshdeep.png";
 
 export function Hero() {
   const ref = useRef<HTMLElement>(null);
@@ -106,14 +106,18 @@ export function Hero() {
           transition={{ duration: 0.8, delay: 0.3 }}
           className="relative mx-auto w-full max-w-md will-change-transform"
         >
-          <div className="relative aspect-[3/4] overflow-hidden rounded-lg border border-neon/60 bg-surface shadow-neon">
+          <div className="relative aspect-[3/4] overflow-hidden rounded-lg border border-neon/60 shadow-neon">
+            {/* layered cyber backdrop behind the cut-out portrait */}
+            <div className="absolute inset-0 bg-gradient-to-b from-[color-mix(in_oklab,var(--neon)_12%,transparent)] via-surface/60 to-background" />
+            <div className="absolute inset-0 cyber-grid opacity-40" />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,color-mix(in_oklab,var(--neon)_25%,transparent),transparent_65%)]" />
             <img
               src={portrait}
               alt="Arshdeep Singh — Cybersecurity Engineer"
-              className="h-full w-full object-cover"
+              className="relative h-full w-full object-contain object-bottom drop-shadow-[0_0_25px_color-mix(in_oklab,var(--neon)_40%,transparent)]"
               loading="eager"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
             <div className="scanlines absolute inset-0" />
 
             <Corner className="left-2 top-2" />

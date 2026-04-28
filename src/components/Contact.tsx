@@ -1,10 +1,14 @@
 import { Section } from "./Section";
 
 const CHANNELS = [
-  { k: "email", v: "arshdeep@example.com", href: "mailto:arshdeep@example.com" },
-  { k: "phone", v: "+91 •••• ••••••", href: "tel:+910000000000" },
-  { k: "github", v: "github.com/arshdeep", href: "https://github.com/" },
-  { k: "linkedin", v: "linkedin.com/in/arshdeep", href: "https://linkedin.com/" },
+  { k: "email", v: "sa6763205@gmail.com", href: "mailto:sa6763205@gmail.com" },
+  { k: "phone", v: "+91 75893 82319", href: "tel:+917589382319" },
+  { k: "github", v: "github.com/arshdeepsingh157", href: "https://github.com/arshdeepsingh157" },
+  {
+    k: "linkedin",
+    v: "linkedin.com/in/arshdeep-singh-742973240",
+    href: "https://www.linkedin.com/in/arshdeep-singh-742973240/",
+  },
 ];
 
 export function Contact() {
@@ -34,7 +38,7 @@ export function Contact() {
                 rel="noreferrer"
                 className="group flex items-center justify-between rounded border border-border bg-surface/40 px-4 py-3 transition hover:border-neon hover:shadow-neon"
               >
-                <span>
+                <span className="truncate">
                   <span className="text-cyber">{c.k}</span>
                   <span className="text-muted-foreground"> :: </span>
                   <span className="text-foreground group-hover:text-neon">{c.v}</span>
