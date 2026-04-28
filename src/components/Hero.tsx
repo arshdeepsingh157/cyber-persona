@@ -1,28 +1,59 @@
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import portrait from "@/assets/arshdeep.jpeg";
 
 export function Hero() {
+  const ref = useRef<HTMLElement>(null);
+  const reduce = useReducedMotion();
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start start", "end start"],
+  });
+
+  const gridY = useTransform(scrollYProgress, [0, 1], ["0%", "40%"]);
+  const snippetSlowY = useTransform(scrollYProgress, [0, 1], [0, -120]);
+  const snippetFastY = useTransform(scrollYProgress, [0, 1], [0, -220]);
+  const textY = useTransform(scrollYProgress, [0, 1], [0, -80]);
+  const portraitY = useTransform(scrollYProgress, [0, 1], [0, -140]);
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+
+  const s = <T,>(v: T): T | undefined => (reduce ? undefined : v);
+
   return (
-    <section id="top" className="relative min-h-screen overflow-hidden pt-24">
-      <div className="absolute inset-0 cyber-grid opacity-40" />
+    <section ref={ref} id="top" className="relative min-h-screen overflow-hidden pt-24">
+      <motion.div
+        style={s({ y: gridY })}
+        className="absolute inset-0 cyber-grid opacity-40 will-change-transform"
+      />
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/40 to-background" />
 
-      {/* floating code snippets */}
-      <FloatingSnippet className="left-[6%] top-[18%]" delay={0}>
-        {"if (threat.detected) {\n  isolate();\n  alert(SOC);\n}"}
-      </FloatingSnippet>
-      <FloatingSnippet className="right-[5%] top-[28%]" delay={1.2}>
-        {"nmap -sV -p- target.ip\n[+] 22/tcp open ssh\n[+] 443/tcp open https"}
-      </FloatingSnippet>
-      <FloatingSnippet className="left-[8%] bottom-[12%]" delay={2}>
-        {"sudo ./exploit.sh\nACCESS GRANTED"}
-      </FloatingSnippet>
+      {/* floating code snippets with parallax */}
+      <motion.div style={s({ y: snippetSlowY })} className="will-change-transform">
+        <FloatingSnippet className="left-[6%] top-[18%]" delay={0}>
+          {"if (threat.detected) {\n  isolate();\n  alert(SOC);\n}"}
+        </FloatingSnippet>
+      </motion.div>
+      <motion.div style={s({ y: snippetFastY })} className="will-change-transform">
+        <FloatingSnippet className="right-[5%] top-[28%]" delay={1.2}>
+          {"nmap -sV -p- target.ip\n[+] 22/tcp open ssh\n[+] 443/tcp open https"}
+        </FloatingSnippet>
+      </motion.div>
+      <motion.div style={s({ y: snippetSlowY })} className="will-change-transform">
+        <FloatingSnippet className="left-[8%] bottom-[12%]" delay={2}>
+          {"sudo ./exploit.sh\nACCESS GRANTED"}
+        </FloatingSnippet>
+      </motion.div>
 
-      <div className="relative mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 px-6 py-16 lg:grid-cols-[1.3fr_1fr] lg:py-24">
+      <motion.div
+        style={s({ opacity: contentOpacity })}
+        className="relative mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 px-6 py-16 lg:grid-cols-[1.3fr_1fr] lg:py-24"
+      >
         <motion.div
+          style={s({ y: textY })}
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
+          className="will-change-transform"
         >
           <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-surface/50 px-3 py-1 font-mono text-xs text-muted-foreground backdrop-blur">
             <span className="h-2 w-2 animate-pulse rounded-full bg-neon" />
@@ -69,10 +100,11 @@ export function Hero() {
         </motion.div>
 
         <motion.div
+          style={s({ y: portraitY })}
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.3 }}
-          className="relative mx-auto w-full max-w-md"
+          className="relative mx-auto w-full max-w-md will-change-transform"
         >
           <div className="relative aspect-[3/4] overflow-hidden rounded-lg border border-neon/60 bg-surface shadow-neon">
             <img
@@ -84,7 +116,6 @@ export function Hero() {
             <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
             <div className="scanlines absolute inset-0" />
 
-            {/* HUD corners */}
             <Corner className="left-2 top-2" />
             <Corner className="right-2 top-2 rotate-90" />
             <Corner className="bottom-2 left-2 -rotate-90" />
@@ -99,14 +130,17 @@ export function Hero() {
             </div>
           </div>
 
-          <div className="absolute -left-4 -top-4 rounded border border-cyber/50 bg-background/80 px-3 py-1.5 font-mono text-[10px] uppercase tracking-widest text-cyber backdrop-blur animate-float">
+          <div className="absolute -left-4 -top-4 rounded border border-cyber/50 bg-background/80 px-3 py-1.5 font-mono text-[10px] uppercase tracking-widest text-cyber animate-float">
             status: secure
           </div>
-          <div className="absolute -bottom-4 -right-4 rounded border border-neon/50 bg-background/80 px-3 py-1.5 font-mono text-[10px] uppercase tracking-widest text-neon backdrop-blur animate-float" style={{ animationDelay: "1.5s" }}>
+          <div
+            className="absolute -bottom-4 -right-4 rounded border border-neon/50 bg-background/80 px-3 py-1.5 font-mono text-[10px] uppercase tracking-widest text-neon animate-float"
+            style={{ animationDelay: "1.5s" }}
+          >
             threat: 0.00%
           </div>
         </motion.div>
-      </div>
+      </motion.div>
     </section>
   );
 }
@@ -114,7 +148,9 @@ export function Hero() {
 function Stat({ value, label }: { value: string; label: string }) {
   return (
     <div>
-      <div className="font-display text-2xl font-bold text-neon glow-neon md:text-3xl">{value}</div>
+      <div className="font-display text-2xl font-bold text-neon glow-neon md:text-3xl">
+        {value}
+      </div>
       <div className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
         {label}
       </div>
@@ -142,7 +178,5 @@ function FloatingSnippet({
 }
 
 function Corner({ className = "" }: { className?: string }) {
-  return (
-    <div className={`absolute h-5 w-5 border-l-2 border-t-2 border-neon ${className}`} />
-  );
+  return <div className={`absolute h-5 w-5 border-l-2 border-t-2 border-neon ${className}`} />;
 }
