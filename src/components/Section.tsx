@@ -22,9 +22,9 @@ export function Section({
     offset: ["start end", "end start"],
   });
 
-  // Transform-only parallax, small offsets → no opacity repaint, GPU-friendly.
-  const headerY = useTransform(scrollYProgress, [0, 1], [40, -40]);
-  const contentY = useTransform(scrollYProgress, [0, 1], [20, -20]);
+  // Stronger parallax effect for visibility.
+  const headerY = useTransform(scrollYProgress, [0, 1], [120, -120]);
+  const contentY = useTransform(scrollYProgress, [0, 1], [60, -60]);
 
   return (
     <section
