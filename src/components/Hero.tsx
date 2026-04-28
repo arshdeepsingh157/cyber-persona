@@ -1,23 +1,24 @@
 import { useRef } from "react";
-import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import portrait from "@/assets/arshdeep.png";
+import { useParallaxEnabled } from "@/hooks/use-parallax-enabled";
 
 export function Hero() {
   const ref = useRef<HTMLElement>(null);
-  const reduce = useReducedMotion();
+  const enabled = useParallaxEnabled();
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end start"],
   });
 
-  const gridY = useTransform(scrollYProgress, [0, 1], ["0%", "40%"]);
-  const snippetSlowY = useTransform(scrollYProgress, [0, 1], [0, -120]);
-  const snippetFastY = useTransform(scrollYProgress, [0, 1], [0, -220]);
-  const textY = useTransform(scrollYProgress, [0, 1], [0, -80]);
-  const portraitY = useTransform(scrollYProgress, [0, 1], [0, -140]);
-  const contentOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+  // Smaller offsets, transform-only. No opacity (triggers full repaint).
+  const gridY = useTransform(scrollYProgress, [0, 1], ["0%", "25%"]);
+  const snippetSlowY = useTransform(scrollYProgress, [0, 1], [0, -60]);
+  const snippetFastY = useTransform(scrollYProgress, [0, 1], [0, -110]);
+  const textY = useTransform(scrollYProgress, [0, 1], [0, -40]);
+  const portraitY = useTransform(scrollYProgress, [0, 1], [0, -70]);
 
-  const s = <T,>(v: T): T | undefined => (reduce ? undefined : v);
+  const s = <T,>(v: T): T | undefined => (enabled ? v : undefined);
 
   return (
     <section ref={ref} id="top" className="relative min-h-screen overflow-hidden pt-24">
@@ -44,8 +45,7 @@ export function Hero() {
         </FloatingSnippet>
       </motion.div>
 
-      <motion.div
-        style={s({ opacity: contentOpacity })}
+      <div
         className="relative mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 px-6 py-16 lg:grid-cols-[1.3fr_1fr] lg:py-24"
       >
         <motion.div
