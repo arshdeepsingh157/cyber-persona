@@ -96,7 +96,6 @@
     background-image:
       radial-gradient(ellipse at top, color-mix(in oklab, var(--neon) 8%, transparent), transparent 50%),
       radial-gradient(ellipse at bottom, color-mix(in oklab, var(--cyber) 8%, transparent), transparent 50%);
-    background-attachment: fixed;
   }
 
   h1, h2, h3, h4 {
