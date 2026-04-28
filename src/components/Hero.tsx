@@ -144,7 +144,7 @@ export function Hero() {
             threat: 0.00%
           </div>
         </motion.div>
-      </motion.div>
+      </div>
     </section>
   );
 }
