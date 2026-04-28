@@ -1,68 +1,71 @@
 import { useRef, type ReactNode } from "react";
-import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useParallaxEnabled } from "@/hooks/use-parallax-enabled";
 
 type Props = {
   children: ReactNode;
   className?: string;
-  /** pixels translated from section entry to exit. Negative = upward drift */
+  /** pixels translated across section progress. Keep small for perf. */
   offset?: number;
-  /** fade in/out at edges */
-  fade?: boolean;
 };
 
 /**
- * Wraps content in a scroll-driven parallax layer.
- * Uses the element's own viewport progress so it works for any section.
+ * Lightweight scroll-driven parallax. Transform-only (no opacity) to keep on GPU.
+ * Disabled automatically on mobile / low-end / reduced-motion devices.
  */
-export function Parallax({ children, className, offset = 60, fade = false }: Props) {
+export function Parallax({ children, className, offset = 40 }: Props) {
   const ref = useRef<HTMLDivElement>(null);
-  const reduce = useReducedMotion();
+  const enabled = useParallaxEnabled();
+
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"],
   });
-
   const y = useTransform(scrollYProgress, [0, 1], [offset, -offset]);
-  const opacity = useTransform(scrollYProgress, [0, 0.15, 0.85, 1], [0, 1, 1, 0]);
 
-  if (reduce) {
+  if (!enabled) {
     return <div className={className}>{children}</div>;
   }
 
   return (
     <div ref={ref} className={className}>
-      <motion.div style={fade ? { y, opacity } : { y }} className="will-change-transform">
+      <motion.div
+        style={{ y, translateZ: 0 }}
+        className="will-change-transform [backface-visibility:hidden]"
+      >
         {children}
       </motion.div>
     </div>
   );
 }
 
-/**
- * Background parallax — moves slower than content (classic depth effect).
- */
+/** Background parallax — slower drift behind content. */
 export function ParallaxBg({
   children,
   className,
-  speed = 0.3,
+  speed = 0.2,
 }: {
   children: ReactNode;
   className?: string;
   speed?: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const reduce = useReducedMotion();
+  const enabled = useParallaxEnabled();
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"],
   });
-  const y = useTransform(scrollYProgress, [0, 1], [`${-100 * speed}px`, `${100 * speed}px`]);
+  const y = useTransform(
+    scrollYProgress,
+    [0, 1],
+    [`${-60 * speed}px`, `${60 * speed}px`],
+  );
 
   return (
     <div ref={ref} className={className}>
       <motion.div
-        style={reduce ? undefined : { y }}
-        className="pointer-events-none absolute inset-0 will-change-transform"
+        style={enabled ? { y, translateZ: 0 } : undefined}
+        className="pointer-events-none absolute inset-0 will-change-transform [backface-visibility:hidden]"
       >
         {children}
       </motion.div>
