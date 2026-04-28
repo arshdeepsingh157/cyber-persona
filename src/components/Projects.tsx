@@ -39,7 +39,7 @@ export function Projects() {
         {PROJECTS.map((p) => (
           <article
             key={p.code}
-            className="group relative flex flex-col overflow-hidden rounded-lg border border-border bg-card/40 p-6 backdrop-blur transition-all hover:-translate-y-1 hover:border-neon hover:shadow-neon"
+            className="group relative flex flex-col overflow-hidden rounded-lg border border-border bg-card/80 p-6 transition-all hover:-translate-y-1 hover:border-neon hover:shadow-neon"
           >
             <div className="pointer-events-none absolute inset-0 cyber-grid-sm opacity-0 transition-opacity group-hover:opacity-40" />
             <div className="relative">

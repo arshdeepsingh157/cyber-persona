@@ -63,7 +63,7 @@ function TimelineItem({
       <span
         className={`absolute -left-[2.2rem] top-2 h-3 w-3 rounded-full ${color} md:-left-[3.3rem]`}
       />
-      <div className="rounded-lg border border-border bg-card/40 p-6 backdrop-blur">
+      <div className="rounded-lg border border-border bg-card/80 p-6">
         <div className={`font-mono text-xs uppercase tracking-widest ${text}`}>{when}</div>
         <h3 className="mt-2 font-display text-xl font-bold uppercase">{role}</h3>
         <div className="font-mono text-sm text-muted-foreground">{org}</div>

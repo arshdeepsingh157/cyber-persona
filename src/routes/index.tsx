@@ -11,16 +11,17 @@ import { Contact } from "@/components/Contact";
 
 export const Route = createFileRoute("/")({
   component: Index,
+  ssr: false,
 });
 
 function Index() {
-  const [booted, setBooted] = useState(true);
+  // Default: show boot. On mount, skip if already seen this session.
+  const [booted, setBooted] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return sessionStorage.getItem("arsh_booted") === "1";
+  });
 
   useEffect(() => {
-    if (typeof window === "undefined") return;
-    const seen = sessionStorage.getItem("arsh_booted");
-    if (!seen) setBooted(false);
-
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") finish();
     };
@@ -30,7 +31,9 @@ function Index() {
   }, []);
 
   const finish = () => {
-    sessionStorage.setItem("arsh_booted", "1");
+    try {
+      sessionStorage.setItem("arsh_booted", "1");
+    } catch {}
     setBooted(true);
   };
 

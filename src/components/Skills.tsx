@@ -49,7 +49,7 @@ export function Skills() {
         {GROUPS.map((g) => (
           <div
             key={g.name}
-            className="hover-glow group relative overflow-hidden rounded-lg border border-border bg-card/40 p-6 backdrop-blur"
+            className="hover-glow group relative overflow-hidden rounded-lg border border-border bg-card/80 p-6"
           >
             <div className="absolute -right-6 -top-6 font-display text-7xl font-black text-neon/5">
               {g.icon}
