@@ -16,9 +16,8 @@ export function About() {
       subtitle="Cybersecurity engineering student obsessed with the mechanics of intrusion — and the discipline of defense."
     >
       <div className="grid gap-8 lg:grid-cols-[1.3fr_1fr]">
-        <div className="relative overflow-hidden rounded-lg border border-border bg-card/40 p-8 backdrop-blur">
-          <div className="absolute inset-0 cyber-grid-sm opacity-30" />
-          <div className="relative space-y-4 text-foreground/85">
+        <div className="relative overflow-hidden rounded-lg border border-border bg-card/80 p-8">
+          <div className="space-y-4 text-foreground/85">
             <p>
               I'm <span className="text-neon glow-neon">Arshdeep Singh</span>, a cybersecurity
               engineer currently pursuing my B.Tech in Computer Science (Cybersecurity) at GNA
@@ -42,7 +41,7 @@ export function About() {
           {HIGHLIGHTS.map((h) => (
             <div
               key={h.label}
-              className="hover-glow group rounded-lg border border-border bg-card/40 p-5 backdrop-blur"
+              className="hover-glow rounded-lg border border-border bg-card/80 p-5"
             >
               <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-cyber">
                 {h.label}

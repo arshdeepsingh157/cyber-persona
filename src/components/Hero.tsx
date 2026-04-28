@@ -133,7 +133,7 @@ function FloatingSnippet({
 }) {
   return (
     <div
-      className={`pointer-events-none absolute hidden rounded border border-border bg-surface/40 p-3 font-mono text-[10px] leading-relaxed text-neon/70 backdrop-blur lg:block ${className}`}
+      className={`pointer-events-none absolute hidden rounded border border-border bg-surface/70 p-3 font-mono text-[10px] leading-relaxed text-neon/70 lg:block ${className}`}
       style={{ animation: `float-slow 6s ease-in-out ${delay}s infinite` }}
     >
       <pre className="whitespace-pre">{children}</pre>
