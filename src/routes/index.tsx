@@ -8,6 +8,7 @@ import { Skills } from "@/components/Skills";
 import { Projects } from "@/components/Projects";
 import { Experience } from "@/components/Experience";
 import { Contact } from "@/components/Contact";
+import { VantaBackground } from "@/components/VantaBackground";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -44,6 +45,7 @@ function Index() {
 
   return (
     <div className="relative min-h-screen bg-background text-foreground">
+      <VantaBackground />
       {!booted && <BootSequence onComplete={finish} />}
       <Navbar />
       <main>

@@ -26,11 +26,11 @@ export function Navbar() {
     >
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
         <a href="#top" className="group flex items-center gap-2 font-mono text-sm">
-          <span className="flex h-8 w-8 items-center justify-center rounded border border-neon bg-background text-neon glow-neon">
+          {/* <span className="flex h-8 w-8 items-center justify-center rounded border border-neon bg-background text-neon glow-neon">
             {"</>"}
-          </span>
+          </span> */}
           <span className="font-display font-bold uppercase tracking-widest text-foreground">
-            arsh<span className="text-neon">.</span>sec
+            arshdeep<span className="text-neon">.</span>sec
           </span>
         </a>
 

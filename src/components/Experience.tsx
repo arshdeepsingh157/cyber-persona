@@ -8,7 +8,7 @@ export function Experience() {
       title="Experience"
       subtitle="Professional engagements where I've operated as engineer and analyst."
     >
-      <div className="relative space-y-8 border-l border-border pl-8 md:pl-12">
+      <div className="relative space-y-8 border-l border-border pl-8 md:pl-12 mt-10 tracking-wide animate-slow-float"> 
         <TimelineItem
           when="Present"
           role="Cybersecurity Engineer"
@@ -20,9 +20,21 @@ export function Experience() {
           ]}
         />
       </div>
+       <div className="relative space-y-8 border-l border-border pl-8 md:pl-12 mt-10 tracking-wide hover:animate-float">
+        <TimelineItem
+          when="Present"
+          role="Cybersecurity Trainer"
+          org="Virtual Academy"
+          details={[
+            "Designed and delivered cybersecurity training programs for students and professionals.",
+            "Developed hands-on labs and exercises to enhance practical skills.",
+            "Mentored participants in ethical hacking, threat analysis, and incident response.",
+          ]}
+        />
+      </div>
 
       <div id="education" className="mt-20">
-        <div className="mb-8 flex items-center gap-3 font-mono text-xs uppercase tracking-[0.3em] text-cyber">
+        <div className="mb-8 flex items-center gap-3 font-mono text-xs uppercase tracking-[0.3em] text-cyber ">
           <span className="h-px w-8 bg-cyber" />
           // 05 — education
         </div>

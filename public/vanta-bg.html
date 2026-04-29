@@ -1,0 +1,23 @@
+<!-- Add these in your public/index.html for Vanta.js background effect -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.dots.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    if (window.VANTA && window.VANTA.DOTS) {
+      window.VANTA.DOTS({
+        el: "#vanta-bg",
+        mouseControls: true,
+        touchControls: true,
+        gyroControls: false,
+        minHeight: 200.00,
+        minWidth: 200.00,
+        scale: 1.00,
+        scaleMobile: 1.00,
+        color: 0x20ff6b,
+        color2: 0x2cc524,
+        size: 2.00,
+        spacing: 21.00
+      });
+    }
+  });
+</script>

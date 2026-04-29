@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import portrait from "@/assets/arshdeep.png";
+import portrait from "@/assets/arshdeep-removebg-preview.png";
 import { useParallaxEnabled } from "@/hooks/use-parallax-enabled";
 
 export function Hero() {
@@ -57,7 +57,7 @@ export function Hero() {
         >
           <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-surface/50 px-3 py-1 font-mono text-xs text-muted-foreground backdrop-blur">
             <span className="h-2 w-2 animate-pulse rounded-full bg-neon" />
-            SYSTEM ONLINE • SOC ANALYST STANDBY
+            SYSTEM ONLINE • CYBERSECURITY ENGINEER STANDBY
           </div>
 
           <h1 className="font-display text-5xl font-black uppercase leading-[0.95] tracking-tight md:text-7xl lg:text-8xl">
@@ -69,12 +69,12 @@ export function Hero() {
           <p className="mt-6 max-w-xl font-mono text-sm text-muted-foreground md:text-base">
             <span className="text-neon">&gt;</span> Cybersecurity Engineer
             <span className="mx-2 text-border">|</span>
-            <span className="text-cyber">SOC Analyst</span>
+            {/* <span className="text-cyber">SOC Analyst</span> */}
           </p>
 
           <p className="mt-4 max-w-xl text-lg text-foreground/80">
             Securing systems, analyzing threats, and building resilient infrastructure across
-            cloud, network, and endpoint layers.
+            cloud, network, and endpoint layers. <br />Hire me before your competitors do.
           </p>
 
           <div className="mt-10 flex flex-wrap gap-4">
